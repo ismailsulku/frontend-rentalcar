@@ -13,7 +13,7 @@ export class CarService {
   constructor(private httpClient:HttpClient) { }
 
   getCars():Observable<CarResponseModel>{
-    return this.httpClient.get<CarResponseModel>(this.apiUrl); 
+    return this.httpClient.get<CarResponseModel>(this.apiUrl);
   }
     
 }
