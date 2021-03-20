@@ -1,0 +1,10 @@
+<div class="list-group border-primary mb-3">
+    <li
+      (click)="setCurrentCategory(category)"
+      *ngFor="let category of categories"
+      [class]="getCurrentCategory(category)"
+      routerLink="/{{ category.toLowerCase() }}"
+    >
+      {{ category }}
+    </li>
+  </div>

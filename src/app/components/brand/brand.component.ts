@@ -13,7 +13,7 @@ export class BrandComponent implements OnInit {
   constructor(private brandService:BrandService) { }
 
   ngOnInit(): void {
-    this.getBrands();
+    this.getBrands(); 
   }
 
   getBrands() {
