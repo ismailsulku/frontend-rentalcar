@@ -1,10 +1,9 @@
 export interface Car{
-    carId: number;
-    modelYear: number;
-    dailyPrice: number;
-    descriptions: string;
-    brandName: string;
-    colorName: string;
-    carImageDate: string;
-    imagePath: string;
+    id: number
+    brandId: number
+    colorId: number
+    description: string
+    modelYear: number
+    dailyPrice: number
+    findexPoint: number
 }

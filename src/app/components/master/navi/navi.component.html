@@ -1,0 +1,23 @@
+<div class="container my-lg-5 mt-3">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light border shadow px-4">
+     <a class="navbar-brand" routerLink="cars"><i class="bi-bullseye me-1"></i> {{ title }}</a>
+
+     <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+        <span class="navbar-toggler-icon"></span>
+     </button>
+
+     <div class="collapse navbar-collapse" id="navbarContent">
+        <div class="navbar-nav mb-2 mb-lg-0">
+           <a class="nav-item nav-link" routerLink="cars" routerLinkActive="active">Arabalar</a>
+           <a class="nav-item nav-link" routerLink="rentals" routerLinkActive="active">Kiralamalar</a>
+           <a class="nav-item nav-link" routerLink="customers" routerLinkActive="active">Müşteriler</a>
+           <a class="nav-item nav-link" routerLink="brands" routerLinkActive="active">Markalar</a>
+           <a class="nav-item nav-link" routerLink="colors" routerLinkActive="active">Renkler</a>
+        </div>
+
+        <div class="navbar-nav ms-auto mb-2 mb-lg-0">
+           <app-auth-menu></app-auth-menu>
+        </div>
+     </div>
+  </nav>
+</div>

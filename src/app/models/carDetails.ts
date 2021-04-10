@@ -1,10 +1,8 @@
-export interface CarDetails {
-    carId: number;
-    brandName: string;
-    colorName: string;
-    modelYear: number;
-    dailyPrice: number;
-    descriptions: string;
-    carImageDate: string;
-    imagePath: string;
+import { Car } from "./car";
+import { CarImages } from "./carImages";
+
+export interface CarDetails extends Car {
+  brandName: string
+  colorName: string
+  carImages: CarImages[]
   }

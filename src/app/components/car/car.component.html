@@ -1,23 +1,45 @@
-<table  class="table table-hover table-dark table-striped">
-    <thead class="table-dark">
-        <tr>
-            <th>Car Id</th>
-            <th>Brand Name</th>
-            <th>Color Name</th>
-            <th>Model Year</th>
-            <th>Daily Price</th>
-            <th>Descriptions</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let car of cars">
-            <td>{{car.carId}}</td>
-            <td>{{car.brandName}}</td>
-            <td>{{car.colorName}}</td>
-            <td>{{car.modelYear}}</td>
-            <td>{{car.dailyPrice}}</td>
-            <td>{{car.descriptions}}</td>
-        </tr>
-    </tbody>
-    
-</table>
+<div class="row mt-4">
+   <div class="col-lg-9">
+      <input type="text" [(ngModel)]="filterText" class="form-control rounded-0 mb-3"
+             placeholder="Araba Ara..." autocomplete="off">
+
+      <div class="row">
+         <div class="col-lg-4 col-xxl-3 mb-4" *ngFor="let car of carDetails | carFilter: filterText">
+            <div tabindex="0" class="card" [routerLink]="'/cars/detail/' + car.id">
+               <img [src]="apiUrl + car.carImages[0].imagePath" class="card-img-top" [alt]="car.brandName + ' ' + car.description">
+
+               <div class="card-body">
+                  <h5 class="card-title">{{ car.brandName }} {{ car.description }}</h5>
+                  <hr>
+                  <ul class="list-unstyled">
+                     <li><b>Renk: </b>{{ car.colorName }}</li>
+                     <li><b>Model Yılıd: </b>{{ car.modelYear }}</li>
+                     <li><b>Günlük Ücret: </b>{{ car.dailyPrice |currency : '₺ '  }}</li>
+                     <li><b>Findeks Puanı: </b>{{ car.findexPoint }}</li>
+                  </ul>
+
+                  <button [routerLink]="'/cars/update/' + car.id"
+                     class="btn btn-primary px-4 float-end">
+                     Güncelle
+                  </button>
+               </div>
+            </div>
+         </div>
+      </div>
+
+      <div *ngIf="carDetails.length == 0" class="alert alert-primary text-center lead fw-normal py-4">
+         Bu bilgilere sahip hiç araba kaydı <b>bulunamadı</b>
+      </div>
+   </div>
+
+   <div class="col-lg-3">
+
+      <div class="d-grid mb-3">
+         <button class="btn btn-primary rounded-0" routerLink="/cars/add">
+            <i class="bi-plus-square me-1"></i> Yeni Araba Ekle
+         </button>
+      </div>
+
+      <app-car-filter></app-car-filter>
+   </div>
+</div>

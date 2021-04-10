@@ -1,32 +1,65 @@
 import { Component, OnInit } from '@angular/core';
-import { Car } from 'src/app/models/car';
-import { CarDetails } from 'src/app/models/carDetails';
-
-import { CarService } from 'src/app/services/car.service';
+import { CarService } from '../../services/car.service';
+import { CarDetails } from '../../models/carDetails';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-car',
-  templateUrl: './car.component.html',
-  styleUrls: ['./car.component.css']
+   selector: 'app-car',
+   templateUrl: './car.component.html',
+   styleUrls: ['./car.component.css']
 })
+
 export class CarComponent implements OnInit {
-  
-  cars:Car[]=[];
-  carDetails:CarDetails[]=[];
-  dataLoaded=false;
-  
-  constructor(private carService:CarService) { }
 
-  ngOnInit(): void {
-    this.getCars();
-  }
+   carDetail: CarDetails;
+   carDetails: CarDetails[] = [];
+   filterText: string = '';
+   apiUrl = "https://localhost:44341/"
 
-  getCars(){
-    this.carService.getCars().subscribe(response=>{
-      this.cars=response.data
-      this.dataLoaded=true
-  })
-    
- }
- 
+   constructor(private carService: CarService, private activatedRoute: ActivatedRoute) {
+   }
+
+   ngOnInit(): void {
+      this.getCarsByFiltered();
+   }
+
+   getCars() {
+      this.carService.getCarDetail().subscribe((response) => {
+         this.carDetails = response.data;
+      });
+   }
+
+   getCarDetailsByBrandId(brandId: number) {
+      this.carService.getCarDetail().subscribe(response => {
+         this.carDetails = response.data.filter(car => car.brandId == brandId);
+      });
+   }
+
+   getCarDetailsByColorId(colorId: number) {
+      this.carService.getCarDetail().subscribe(response => {
+         this.carDetails = response.data.filter(car => car.colorId == colorId);
+      });
+   }
+
+   getCarsByBrandIdAndColorId(brandId: number, colorId: number) {
+      this.carService.getCarDetail().subscribe(response => {
+         this.carDetails = response.data.filter(car =>
+            car.brandId == brandId && car.colorId == colorId
+         );
+      });
+   }
+
+   getCarsByFiltered() {
+      this.activatedRoute.params.subscribe(param => {
+         if (param['brandId'] > 0 && param['colorId'] == 0) {
+            return this.getCarDetailsByBrandId(param['brandId']);
+         } else if (param['colorId'] > 0 && param['brandId'] == 0) {
+            return this.getCarDetailsByColorId(param['colorId']);
+         } else if (param['brandId'] > 0 && param['colorId'] > 0) {
+            return this.getCarsByBrandIdAndColorId(param['brandId'], param['colorId']);
+         }
+
+         return this.getCars();
+      });
+   }
 }

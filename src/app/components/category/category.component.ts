@@ -22,9 +22,9 @@ export class CategoryComponent implements OnInit {
 
   getCurrentCategory(category: string) {
     if (category == this.currentCategory) {
-      return 'list-group-item list-group-item-action list-group-item-primary active';
+      return 'list-group-item list-group-item-action list-group-item-light active';
     } else {
-      return 'list-group-item list-group-item-action list-group-item-primary';
+      return 'list-group-item list-group-item-action list-group-item-dark';
     }
   }
   

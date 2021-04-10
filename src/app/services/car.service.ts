@@ -4,6 +4,8 @@ import { Observable } from 'rxjs';
 import { Car } from '../models/car';
 import { CarDetails } from '../models/carDetails';
 import { ListResponseModel } from '../models/listResponseModel';
+import { ResponseModel } from '../models/responseModel';
+import { SingleResponseModel } from '../models/singleResponseModel';
 
 
 @Injectable({
@@ -11,28 +13,26 @@ import { ListResponseModel } from '../models/listResponseModel';
 })
 export class CarService {
   
-  apiUrl="https://localhost:44341/api/"
+   private apiUrl: string = 'https://localhost:44341/api/cars/';
 
-  constructor(private httpClient:HttpClient) { }
+   constructor(private httpClient: HttpClient) {
+   }
 
-  getCars():Observable<ListResponseModel<Car>>{
-    let newPath = this.apiUrl +"cars/getallcardetails";
-    return this.httpClient.get<ListResponseModel<Car>>(newPath);
-  }
-  
-  getCarsDetails(carId: number): Observable<ListResponseModel<CarDetails>> {
-    let newPath = this.apiUrl + 'cars/getcardetail?carId=' + carId;
-    return this.httpClient.get<ListResponseModel<CarDetails>>(newPath);
-  }
+   getCarDetail(): Observable<ListResponseModel<CarDetails>> {
+      let newPath: string = this.apiUrl + 'get-details';
+      return this.httpClient.get<ListResponseModel<CarDetails>>(newPath);
+   }
 
-  getCarsByColor(colorId: number): Observable<ListResponseModel<Car>> {
-    let newPath = this.apiUrl + 'cars/getcarbycolor?colorId=' + colorId;
-    return this.httpClient.get<ListResponseModel<Car>>(newPath);
-  }
+   getCarById(id: number): Observable<SingleResponseModel<Car>> {
+      let newPath: string = this.apiUrl + 'get-by-id?id=' + id;
+      return this.httpClient.get<SingleResponseModel<Car>>(newPath);
+   }
 
-  getCarsByBrand(brandId: number): Observable<ListResponseModel<Car>> {
-    let newPath = this.apiUrl + 'cars/getcarbybrand?brandId=' + brandId;
-    return this.httpClient.get<ListResponseModel<Car>>(newPath);
-  
-  }
+   add(car: Car): Observable<ResponseModel> {
+      return this.httpClient.post<ResponseModel>(this.apiUrl, car);
+   }
+
+   update(car: Car): Observable<ResponseModel> {
+      return this.httpClient.put<ResponseModel>(this.apiUrl, car);
+   }
 }
